@@ -47,7 +47,7 @@ class _MoviePoster extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
         children: [
-          _MovieImage()
+          _MovieImage(),
         ],
       ),
     );
@@ -67,7 +67,7 @@ class _MovieImage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'),
+              placeholder: AssetImage('lib/assets/no-image.jpg'),
               image: NetworkImage("https://via.placeholder.com/300x400"),
               fit: BoxFit.cover,
               width: 130,
