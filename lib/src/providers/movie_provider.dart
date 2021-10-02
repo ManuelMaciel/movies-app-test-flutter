@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:moviesapp/src/models/models.dart';
+import 'package:moviesapp/src/models/upcoming_response.dart';
 
 class MovieProvider extends ChangeNotifier {
   final String _apiKey = 'b2ca972e881717a97e3b1a0bab689add';
@@ -9,8 +10,10 @@ class MovieProvider extends ChangeNotifier {
 
   List<Result> onDisplayMovies = [];
   List<Result> popularMovies = [];
+  List<Result> upComingMovies = [];
 
   int _popularMoviesPage = 0;
+  int _upComingMoviesPages = 0;
 
   MovieProvider() {
     print('Movie provider inicializado');
@@ -41,13 +44,25 @@ class MovieProvider extends ChangeNotifier {
   getPopularMovies() async {
     _popularMoviesPage++;
 
-    final jsonData =
-        await _getJsonData('3/movie/now_playing', _popularMoviesPage);
+    final jsonData = await _getJsonData('3/movie/popular', _popularMoviesPage);
     final popularResponse = PopularResponse.fromJson(jsonData);
 
     popularMovies = [...popularMovies, ...popularResponse.results];
     print(popularMovies);
     print(_popularMoviesPage);
+    notifyListeners();
+  }
+
+  getUpCommingMovies() async {
+    _upComingMoviesPages++;
+
+    final jsonData =
+        await _getJsonData('3/movie/upcoming', _upComingMoviesPages);
+    final upComingResponse = PopularResponse.fromJson(jsonData);
+
+    upComingMovies = [...upComingMovies, ...upComingResponse.results];
+    print(upComingMovies);
+    print(_upComingMoviesPages);
     notifyListeners();
   }
 }
