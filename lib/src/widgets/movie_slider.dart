@@ -79,7 +79,7 @@ class _MovieSliderState extends State<MovieSlider> {
                 controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 reverse: true,
-                itemCount: 20,
+                itemCount: widget.movies.length,
                 itemBuilder: (BuildContext context, int index) =>
                     _MoviePoster(widget.movies[index]),
               ),
