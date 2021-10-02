@@ -46,6 +46,8 @@ class MovieProvider extends ChangeNotifier {
     final popularResponse = PopularResponse.fromJson(jsonData);
 
     popularMovies = [...popularMovies, ...popularResponse.results];
+    print(popularMovies);
+    print(_popularMoviesPage);
     notifyListeners();
   }
 }

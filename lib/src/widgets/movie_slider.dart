@@ -1,19 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:moviesapp/src/models/models.dart';
 
-class MovieSlider extends StatelessWidget {
+class MovieSlider extends StatefulWidget {
   final List<Result> movies;
   final String? title;
+
+  final Function onNextPage;
 
   const MovieSlider({
     Key? key,
     required this.movies,
+    required this.onNextPage,
     this.title,
   }) : super(key: key);
 
   @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 500) {
+        // TODO: llamar provider
+        widget.onNextPage();
+        print('llamando al next page');
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (movies.length == 0) {
+    if (widget.movies.length == 0) {
       return Container(
         width: double.infinity,
         height: 250,
@@ -33,10 +62,10 @@ class MovieSlider extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // check if title exist
-          if (title != null)
+          if (widget.title != null)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(title!,
+              child: Text(widget.title!,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             ),
 
@@ -47,11 +76,12 @@ class MovieSlider extends StatelessWidget {
               color: Colors.deepPurpleAccent.shade700,
               axisDirection: AxisDirection.left,
               child: ListView.builder(
+                controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 reverse: true,
                 itemCount: 20,
                 itemBuilder: (BuildContext context, int index) =>
-                    _MoviePoster(movies[index]),
+                    _MoviePoster(widget.movies[index]),
               ),
             ),
           ),
