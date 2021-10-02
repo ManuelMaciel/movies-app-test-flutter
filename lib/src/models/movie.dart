@@ -18,6 +18,13 @@ class Result {
     required this.voteCount,
   });
 
+  get fullUrlPosterImage {
+    if (posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
+    }
+    return 'https://i.imgur.com/8u3skSq_d.webp?maxwidth=760&fidelity=grand';
+  }
+
   bool adult;
   String? backdropPath;
   List<int> genreIds;
