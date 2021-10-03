@@ -34,9 +34,9 @@ class CastingCard extends StatelessWidget {
             color: Colors.deepPurpleAccent.shade700,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
+                itemCount: cast.length,
                 itemBuilder: (BuildContext context, int index) =>
-                    _CastCard(cast)),
+                    _CastCard(cast[index])),
           ),
         );
       },
@@ -45,7 +45,7 @@ class CastingCard extends StatelessWidget {
 }
 
 class _CastCard extends StatelessWidget {
-  final List<Cast> cast;
+  final Cast cast;
 
   const _CastCard(this.cast);
 
@@ -60,24 +60,32 @@ class _CastCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
-              image: NetworkImage("https://via.placeholder.com/150x300"),
+              image: NetworkImage(cast.fullUrlprofilePath),
               placeholder: AssetImage("lib/assets/loading.gif"),
               width: 100,
               height: 140,
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
-            'Leonardo DiCaprio',
+            cast.originalName,
             style: TextStyle(
               overflow: TextOverflow.ellipsis,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,
-          )
+          ),
+          // Text(
+          //   cast.knownForDepartment,
+          //   style: TextStyle(
+          //     overflow: TextOverflow.ellipsis,
+          //   ),
+          //   textAlign: TextAlign.center,
+          //   maxLines: 2,
+          // )
         ],
       ),
     );
