@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moviesapp/src/models/models.dart';
+import 'package:moviesapp/src/providers/movie_provider.dart';
+import 'package:provider/provider.dart';
 
 class CastingCard extends StatelessWidget {
   final int movieId;
@@ -6,24 +10,44 @@ class CastingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 30),
-      width: double.infinity,
-      height: 180,
-      child: GlowingOverscrollIndicator(
-        axisDirection: AxisDirection.right,
-        color: Colors.deepPurpleAccent.shade700,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 20,
-            itemBuilder: (BuildContext context, int index) => _CastCard()),
-      ),
+    final movieProvider = Provider.of<MovieProvider>(context, listen: false);
+
+    return FutureBuilder(
+      future: movieProvider.getMovieCast(movieId),
+      builder: (_, AsyncSnapshot<List<Cast>> snapshot) {
+        if (!snapshot.hasData) {
+          return Container(
+            height: 180,
+            constraints: const BoxConstraints(maxWidth: 150),
+            child: const CupertinoActivityIndicator(),
+          );
+        }
+
+        final List<Cast> cast = snapshot.data!;
+
+        return Container(
+          margin: EdgeInsets.only(bottom: 30),
+          width: double.infinity,
+          height: 180,
+          child: GlowingOverscrollIndicator(
+            axisDirection: AxisDirection.right,
+            color: Colors.deepPurpleAccent.shade700,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 20,
+                itemBuilder: (BuildContext context, int index) =>
+                    _CastCard(cast)),
+          ),
+        );
+      },
     );
   }
 }
 
 class _CastCard extends StatelessWidget {
-  const _CastCard({Key? key}) : super(key: key);
+  final List<Cast> cast;
+
+  const _CastCard(this.cast);
 
   @override
   Widget build(BuildContext context) {
