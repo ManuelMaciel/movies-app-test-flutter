@@ -18,7 +18,7 @@ class DetailsScreen extends StatelessWidget {
               [
                 _PosterAndTitle(posterAndTitle: movie),
                 _Overview(overview: movie),
-                CastingCard()
+                CastingCard(movie.id)
               ],
             ),
           ),
@@ -46,10 +46,11 @@ class _CustomAppBar extends StatelessWidget {
           width: double.infinity,
           color: Colors.black12,
           alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
           child: Text(
             customAppBar.title,
             style: TextStyle(fontSize: 16),
+            textAlign: TextAlign.center,
           ),
         ),
         background: FadeInImage(
@@ -70,6 +71,7 @@ class _PosterAndTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    final Size size = MediaQuery.of(context).size;
 
     return Container(
       margin: EdgeInsets.only(top: 20),
@@ -81,40 +83,45 @@ class _PosterAndTitle extends StatelessWidget {
             child: FadeInImage(
               placeholder: AssetImage('lib/assets/no-image.jpg'),
               image: NetworkImage(posterAndTitle.fullUrlPosterImage),
-              height: 200,
+              height: 150,
+              width: 110,
             ),
           ),
           // Space
           const SizedBox(width: 20),
           // END Space
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                posterAndTitle.title,
-                style: textTheme.headline5,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Text(
-                posterAndTitle.originalTitle,
-                style: textTheme.subtitle1,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              Row(
-                children: [
-                  const Icon(Icons.star_outline, size: 20, color: Colors.grey),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    posterAndTitle.voteAverage.toString(),
-                    style: textTheme.caption,
-                  )
-                ],
-              ),
-            ],
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: size.width - 200),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  posterAndTitle.title,
+                  style: textTheme.headline5,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Text(
+                  posterAndTitle.originalTitle,
+                  style: textTheme.subtitle1,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.star_outline,
+                        size: 20, color: Colors.grey),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      posterAndTitle.voteAverage.toString(),
+                      style: textTheme.caption,
+                    )
+                  ],
+                ),
+              ],
+            ),
           )
         ],
       ),

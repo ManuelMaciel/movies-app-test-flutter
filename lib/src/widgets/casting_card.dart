@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CastingCard extends StatelessWidget {
-  const CastingCard({Key? key}) : super(key: key);
+  final int movieId;
+  const CastingCard(this.movieId);
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +14,16 @@ class CastingCard extends StatelessWidget {
         axisDirection: AxisDirection.right,
         color: Colors.deepPurpleAccent.shade700,
         child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 20,
-          itemBuilder: (BuildContext context, int index) => _CastCard()
-        ),
+            scrollDirection: Axis.horizontal,
+            itemCount: 20,
+            itemBuilder: (BuildContext context, int index) => _CastCard()),
       ),
     );
   }
 }
 
 class _CastCard extends StatelessWidget {
-  const _CastCard({ Key? key }) : super(key: key);
+  const _CastCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +48,9 @@ class _CastCard extends StatelessWidget {
           ),
           Text(
             'Leonardo DiCaprio',
-            style: TextStyle( 
-                overflow: TextOverflow.ellipsis,
-                
-              ),
+            style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+            ),
             textAlign: TextAlign.center,
             maxLines: 2,
           )
