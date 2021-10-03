@@ -25,6 +25,13 @@ class Result {
     return 'https://i.imgur.com/8u3skSq_d.webp?maxwidth=760&fidelity=grand';
   }
 
+  get fullUrlPosterBackImage {
+    if (backdropPath != null) {
+      return 'https://image.tmdb.org/t/p/w500$backdropPath';
+    }
+    return 'https://i.imgur.com/8u3skSq_d.webp?maxwidth=760&fidelity=grand';
+  }
+
   bool adult;
   String? backdropPath;
   List<int> genreIds;
