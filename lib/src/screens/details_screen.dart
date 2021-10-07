@@ -54,7 +54,7 @@ class _CustomAppBar extends StatelessWidget {
           ),
         ),
         background: FadeInImage(
-          image: NetworkImage(customAppBar.fullUrlPosterImage),
+          image: NetworkImage(customAppBar.fullUrlPosterBackImage),
           placeholder: const AssetImage("lib/assets/loading.gif"),
           fit: BoxFit.cover,
         ),
@@ -78,13 +78,16 @@ class _PosterAndTitle extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: AssetImage('lib/assets/no-image.jpg'),
-              image: NetworkImage(posterAndTitle.fullUrlPosterImage),
-              height: 150,
-              width: 110,
+          Hero(
+            tag: posterAndTitle.heroId!,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: AssetImage('lib/assets/no-image.jpg'),
+                image: NetworkImage(posterAndTitle.fullUrlPosterImage),
+                height: 150,
+                // width: 110,
+              ),
             ),
           ),
           // Space

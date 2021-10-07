@@ -18,6 +18,8 @@ class Result {
     required this.voteCount,
   });
 
+  String? heroId;
+
   get fullUrlPosterImage {
     if (posterPath != null) {
       return 'https://image.tmdb.org/t/p/w500$posterPath';
